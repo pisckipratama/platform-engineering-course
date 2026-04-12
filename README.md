@@ -67,8 +67,8 @@ This repository is organized into modules following the curriculum:
 
 ## 💬 Let's Connect
 I'm always open to discussing Platform Engineering, DX, or Cloud-Native technologies. Feel free to reach out!
-- **LinkedIn:** [Your LinkedIn Profile Link]
-- **Portfolio:** [Your Portfolio Link]
+- [LinkedIn](https://www.linkedin.com/in/pisckipratama)
+- [Portfolio](https://github.io/pisckipratama)
 
 ---
 *"The goal of Platform Engineering is not to build a platform, but to enable developers to build products."*
