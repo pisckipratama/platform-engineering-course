@@ -20,10 +20,4 @@ spec:
         name: python-app
         ports:
         - containerPort: 5000
-        resources:
-          requests:
-            cpu: "200"
-            memory: "256Mi"
-          limits:
-            cpu: "300"
-            memory: "384Mi"
+        resources: {}
