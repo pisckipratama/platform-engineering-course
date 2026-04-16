@@ -38,9 +38,8 @@ jobs:
         shell: bash
         run: |
           echo ${{ needs.ci.outputs.commit_id }}
-          cd /tmp
-          curl -sSL -o yq https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64
-          chmod +x yq && sudo mv yq /usr/local/bin/yq
+          curl -sSL -o /tmp/yq https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64
+          chmod +x /tmp/yq && sudo mv /tmp/yq /usr/local/bin/yq
           yq --version
           yq -ei '.image.tag = "${{ needs.ci.outputs.commit_id }}"' chart/${{ vars.APP_NAME }}/values.yaml
 
