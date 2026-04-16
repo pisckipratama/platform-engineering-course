@@ -47,5 +47,5 @@ jobs:
             --insecure \
             --grpc-web \
             --username ${{ vars.ARGOCD_USERNAME }} \
-            --password ${{ secrets.ARGOCD_PASSWORD }} \
+            --password ${{ secrets.ARGOCD_PASSWORD }}
           argocd app sync ${{ vars.APP_NAME }}
