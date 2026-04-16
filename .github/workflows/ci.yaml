@@ -8,7 +8,7 @@ on:
         - main
 
 jobs:
-  ci:
+  ci:    
     runs-on: ubuntu-latest
     steps:
       - name: Shorten commit id
@@ -27,11 +27,25 @@ jobs:
         with:
           push: true
           tags: ${{ vars.DOCKERHUB_USERNAME }}/${{ vars.APP_NAME }}:${{ env.COMMIT_ID }}
-
+    outputs:
+      commit_id: ${{ env.COMMIT_ID }}
   cd:
     needs: ci
     runs-on: self-hosted
     steps:
+      - uses: actions/checkout@v6
+      - name: Modify values file
+        shell: bash
+        run: |
+          echo ${{ needs.ci.outputs.commit_id }}
+          curl -L https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 -o /usr/bin/yq
+          sudo chmod +x /usr/bin/yq
+          yq -ei '.image.tag = "${{ needs.ci.outputs.commit_id }}"' chart/${{ vars.APP_NAME }}/values.yaml
+
+      - name: Commit Changes
+        uses: EndBug/add-and-commit@v10
+        with:
+          message: 'Update helm value of ${{ vars.APP_NAME }} with commit ${{ needs.ci.outputs.commit_id }}'
       - name: Install ArgoCD
         shell: bash
         run: |
@@ -39,7 +53,6 @@ jobs:
           curl -ksSL -o argocd https://argocd-server.argocd/download/argocd-linux-amd64
           chmod +x argocd
           sudo mv ./argocd /usr/local/bin/argocd
-
       - name: ArgoCD App Sync
         shell: bash
         run: |
